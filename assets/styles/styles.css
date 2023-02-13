@@ -1,0 +1,33 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    border: 1px solid red;
+}
+
+.logo{
+    width: 60px;
+    height: 60px;
+}
+
+.secondary-nav{
+    height: 80px;
+}
+.prev{
+    text-decoration: none;
+    display: inline-block!important;
+    align-items: center;
+}
+
+.next{
+    text-decoration: none;
+    justify-content: flex-end;
+}
+
+header{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
