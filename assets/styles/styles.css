@@ -11,6 +11,7 @@
 .logo {
     width: 60px;
     height: 60px;
+    
 }
 
 .secondary-nav {
@@ -89,6 +90,7 @@ footer div {
 .card-img-top {
     width: 18rem;
     height: 176px;
+    object-fit: cover;
 }
 
 .nav-link {
@@ -106,7 +108,7 @@ footer div {
     }
 
     main {
-        height: 673px;
+        height: 900px;
     }
 
     footer {
