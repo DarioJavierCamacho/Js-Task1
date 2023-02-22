@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="./assets/images/favicon-32x32.png" type="image/x-icon">
+    <link rel="stylesheet" href="./assets/styles/styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Upcoming Events</title>
+</head>
+<body>
+    <header>
+        <div class="bg-dark header-container">
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <div class="container-fluid ">
+                    <a class="navbar-brand" href="#"><img src="./assets/images/Logo_Amazing_Events.png" alt=""
+                            class="logo"></a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link"  href="index.html">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Upcoming events</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="past.html">Past events</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="contact.html">Contact</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="stats.html">Stats</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div class="sec-container">
+                <nav class="secondary-nav d-flex flex-row justify-content-between">
+                    <a href="index.html" class="prev  text-start d-inline ">&lt;</a>
+                    <div class="secondary-active  text-center">Upcoming events</div>
+                    <a href="past.html" class="next  text-end">&gt;</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div>
+            <div class="d-flex flex-column-reverse d-lg-flex flex-lg-row">
+                <fieldset class="category-filter d-flex justify-content-between col-lg-8 justify-content-xxl-start gap-xxl-5">
+                    <div class="chk-container">
+                        <input type="checkbox" name="category" id="category1" value="category1">category
+                    </div>
+                    <div class="chk-container">
+                        <input type="checkbox" name="category" id="category2" value="category2">category
+                    </div>
+                    <div class="chk-container"><input type="checkbox" name="category" id="category3"
+                            value="category3">category
+                    </div>
+                    <div class="chk-container">
+                        <input type="checkbox" name="category" id="category4" value="category4">category
+                    </div>
+                    <div class="chk-container"><input type="checkbox" name="category" id="category5"
+                            value="category5">category
+                    </div>
+                </fieldset>
+                <form class="d-flex col-lg-3 flex-grow-1">
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-primary" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+        <div>
+            <div class="card-container pt-4 row justify-content-around">
+                <div class="col-sm-11 col-md-5 col-xxl-2 mt-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="./assets/images/Cinema.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-11 col-md-5 col-xxl-2 mt-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="./assets/images/Costume_Party.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-11 col-md-5 col-xxl-2 mt-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="./assets/images/Food_Fair.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-11 col-md-5 col-xxl-2 mt-4">
+                    <div class="card" style="width: 18rem;">
+                        <img src="./assets/images/Marathon.jpg" class="card-img-top" alt="...">
+                        <div class="card-body">
+                            <h5 class="card-title">Card title</h5>
+                            <p class="card-text">Some quick example text to build on the card title and make up the bulk
+                                of
+                                the card's content.</p>
+                            <a href="#" class="btn btn-primary">Go somewhere</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer>
+        <div class="d-sm-flex flex-sm-row flex-wrap justify-content-between align-content-center bg-dark h-100 ">
+            <nav class="social-media d-inline-block col-5 p-xxl-5">
+                <a href="#" class="d-inline-block"><i class="fa-brands fa-instagram fa-xl"></i></a>
+                <a href="#" class="d-inline-block"><i class="fa-brands fa-facebook fa-xl"></i></a>
+                <a href="#" class="d-inline-block"><i class="fa-brands fa-whatsapp fa-xl"></i></a>
+            </nav>
+            <div class="cohort  d-inline-block col-5 p-xxl-5">Cohort</div>
+        </div>
+    </footer>
+    <script src="https://kit.fontawesome.com/b00110248c.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
