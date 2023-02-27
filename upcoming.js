@@ -25,7 +25,7 @@ function filtrarFuturo(arrayData,fecActual){
 function crearTarjetas(nodo,futuros){   
     let stringTarjeta = "";
     for(let  futuro of futuros){
-        stringTarjeta +=  `<div class="col-sm-11 col-md-5 col-xxl-4 mt-4 mb-4 d-flex justify-content-center">
+        stringTarjeta +=  `<div class="col-sm-11 col-md-5 col-lg-4 col-xxl-3 mt-4 mb-4 d-flex justify-content-center">
         <div class="card" style="width: 18rem;">
             <img src="${futuro.image}" class="card-img-top" alt="...">
             <div class="card-body d-flex flex-column">
