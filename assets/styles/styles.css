@@ -107,9 +107,7 @@ footer div {
         align-items: flex-end;
     }
 
-    main {
-        height: 900px;
-    }
+
 
     footer {
         height: 10%;
@@ -137,9 +135,6 @@ i {
 
     }
 
-    main {
-        height: 90rem;
-    }
 
     .chk-container {
         font-size: 2rem;
