@@ -19,7 +19,7 @@ function crearTarjetas(arrayData,nodo){
                 <p class="card-text flex-grow-1">${dato.description}</p>
                 <div class="card-bottom d-flex flex-row justify-content-between">
                     <div>Price $${dato.price}</div>
-                    <a href="#" class="btn btn-primary">Ver más...</a>
+                    <a href="#" class="btn btn-primary">See more...</a>
                 </div>
             </div>
         </div>

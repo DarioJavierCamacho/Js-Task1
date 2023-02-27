@@ -33,7 +33,7 @@ function crearTarjetas(nodo,futuros){
                 <p class="card-text flex-grow-1">${futuro.description}</p>
                 <div class="card-bottom d-flex flex-row justify-content-between">
                     <div>Price $${futuro.price}</div>
-                    <a href="#" class="btn btn-primary">Ver más...</a>
+                    <a href="#" class="btn btn-primary">See more...</a>
                 </div>
             </div>
         </div>
