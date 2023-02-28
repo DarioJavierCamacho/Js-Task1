@@ -6,7 +6,13 @@
 }
 
 
+body{
+    min-height: 100vh;
+}
 
+main{
+    min-height: 70vh;
+}
 
 .logo {
     width: 60px;
@@ -134,7 +140,7 @@ i {
         height: 500px;
 
     }
-
+    
 
     .chk-container {
         font-size: 2rem;

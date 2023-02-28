@@ -1,6 +1,8 @@
 const datos = data.events;
 const fechaActual = data.currentDate;
 const nodoTarjetas = document.getElementById('card-container');
+const nodoSearch = document.getElementById('search');
+const nodoInputSearch = document.getElementById('input-search');
 
 
 /*Parametros    
@@ -10,22 +12,18 @@ const nodoTarjetas = document.getElementById('card-container');
 
 
 function filtrarPasado(arrayData,fecActual){
-    let arrayPasado = [];
-    for(let dato of arrayData){    
-        if(dato.date < fecActual)
-        arrayPasado.push(dato);
-    }
+    let arrayPasado = arrayData.filter(dato =>dato.date < fecActual);
     return arrayPasado;
 }
 
 /* Parametros   
-                nodo: nodo donde insertar el contenido html
                 pasados:array con los eventos pasados
+                nodo: nodo donde insertar el contenido html               
 */ 
 
-function crearTarjetas(nodo,pasados){ 
+function crearTarjetas(pasados,nodo){ 
     let stringTarjeta = "";
-    for(let  pasado of pasados){
+    pasados.forEach(pasado => {
         stringTarjeta +=  `<div class="col-sm-11 col-md-5 col-lg-4 col-xxl-3 mt-4 mb-4 d-flex justify-content-center">
         <div class="card" style="width: 18rem;">
             <img src="${pasado.image}" class="card-img-top" alt="...">
@@ -39,9 +37,37 @@ function crearTarjetas(nodo,pasados){
             </div>
         </div>
     </div>`
-    }
+    return;
+    });
     nodo.innerHTML = stringTarjeta;
 }
 
+/*  Parametros: 
+                arrayData:      array de eventos 
+                nodo:           nodo del input con el texto para filtrar
+    Retorna 
+                arraySearch:    array filtrado con los elementos que contengan el texto del input
+                                
+*/
+function searchFilter(arrayData, nodo) {
+    let searchValue = nodo.value.toLowerCase();
+    let arraySearch = arrayData.filter((data) => data.category.toLowerCase().includes(searchValue) || data.name.toLowerCase().includes(searchValue) || data.description.toLowerCase().includes(searchValue) || data.place.toLowerCase().includes(searchValue))
+    return arraySearch;
+}
+
+/*  Parametros: 
+                evento:         evento el cual se activa y se llama a la funcion
+                arrayData:      array de eventos 
+                input:          nodo del input con el texto para filtrar
+                tarjeta:        nodo donde insertar las tarjetas                                
+*/
+function clickSearch(evento, arrayData, input, tarjeta) {
+    evento.preventDefault();
+    crearTarjetas(searchFilter(arrayData, input),tarjeta);
+    return;
+}
+
 let arrayDatos = filtrarPasado(datos,fechaActual)
-crearTarjetas(nodoTarjetas,arrayDatos);
+crearTarjetas(arrayDatos,nodoTarjetas);
+
+nodoSearch.addEventListener('click', (e) => clickSearch(e, arrayDatos, nodoInputSearch, nodoTarjetas));
