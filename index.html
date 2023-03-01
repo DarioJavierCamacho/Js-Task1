@@ -58,32 +58,44 @@
         <div>
             <div class="d-flex flex-column-reverse d-lg-flex flex-lg-row">
                 <fieldset
-                    class="category-filter d-flex justify-content-between col-lg-8 justify-content-xxl-start gap-xxl-5 col-xxl-9">
+                    class="category-filter d-flex flex-wrap justify-content-between col-lg-8 justify-content-xxl-start gap-xxl-5 col-xxl-9">
                     <div class="chk-container">
-                        <input type="checkbox" name="category1" id="Food-Fair" value="Food-Fair" checked>
-                        <label for="category1">Food Fair</label>
-                    </div>
-                    <div class="chk-container">
-                        <input type="checkbox" name="category2" id="Museum" value="Museum" checked><label for="category2">Museum</label>
-                    </div>
-                    <div class="chk-container"><input type="checkbox" name="Costume-Party" id="Costume-Party"
-                            value="category3" checked><label for="category3">Costume Party</label>
+                        <input type="checkbox" class="chk-box" name="Food-Fair" id="Food-Fair" value="Food Fair"
+                            checked>
+                        <label for="Food-Fair">Food Fair</label>
                     </div>
                     <div class="chk-container">
-                        <input type="checkbox" name="category4" id="category4" value="category4" checked><label for="category4" checked>category</label>
+                        <input type="checkbox" class="chk-box" name="Museum" id="Museum" value="Museum" checked><label
+                            for="Museum">Museum</label>
                     </div>
-                    <div class="chk-container"><input type="checkbox" name="category5" id="category5"
-                            value="category5" checked><label for="category5">category</label>
+                    <div class="chk-container">
+                        <input type="checkbox" class="chk-box" name="Costume-Party" id="Costume-Party" value="Costume Party"
+                            checked><label for="Costume-Party">Costume Party</label>
+                    </div>
+                    <div class="chk-container">
+                        <input type="checkbox" class="chk-box" name="Music-Concert" id="Music-Concert" value="Music Concert"
+                            checked><label for="Music-Concert">Music Concert</label>
+                    </div>
+                    <div class="chk-container"><input type="checkbox" class="chk-box" name="Race" id="Race" value="Race" checked><label
+                            for="Race">Race</label>
+                    </div>
+                    <div class="chk-container"><input type="checkbox" class="chk-box" name="Book-Exchange" id="Book-Exchange"
+                            value="Book Exchange" checked><label for="Book-Exchange">Book Exchange</label>
+                    </div>
+                    <div class="chk-container"><input type="checkbox" class="chk-box" name="Cinema" id="Cinema" value="Cinema"
+                            checked><label for="Cinema">Cinema</label>
                     </div>
                 </fieldset>
                 <form class="d-flex col-lg-3 flex-grow-1">
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search" id="input-search">
+                    <input class="form-control" type="search" placeholder="Search" aria-label="Search"
+                        id="input-search">
                     <button class="btn" type="submit" id="search">Search</button>
                 </form>
             </div>
         </div>
         <div>
-            <div class="card-container pt-4 row justify-content-sm-start justify-content-md-around justify-content-lg-start" id="card-container">
+            <div class="card-container pt-4 row justify-content-sm-start justify-content-md-around justify-content-lg-start"
+                id="card-container">
                 <div class="col-sm-11 col-md-5 col-xxl-2 mt-4">
                     <div class="card" style="width: 18rem;">
                         <img src="./assets/images/Cinema.jpg" class="card-img-top" alt="...">
