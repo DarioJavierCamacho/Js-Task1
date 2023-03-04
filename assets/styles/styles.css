@@ -250,7 +250,7 @@ th{
     box-shadow: 5px 5px 5px rgb(180, 177, 177);
 }
 
-.main-details{
+.main-details,.contact-details{
     min-height: 72vh; 
 }
 
