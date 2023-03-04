@@ -5,16 +5,13 @@ let arrayActual = data.events;
 const nodoTarjetas = document.getElementById('card-container');
 const nodoSearch = document.getElementById('search');
 const nodoInputSearch = document.getElementById('input-search');
-const nodoFFChk = document.getElementById('Food-Fair');
-const nodoMusChk = document.getElementById('Museum');
-const nodoCostPartyChk = document.getElementById('Costume-Party');
-const nodoMusicChk = document.getElementById('Music-Concert');
-const nodoRaceChk = document.getElementById('Race');
-const nodoBookExChk = document.getElementById('Book-Exchange');
-const nodoCinemaChk = document.getElementById('Cinema');
+
+const arrayChk = document.querySelectorAll('.chk-box');
 
 
-/* Parametros   
+/*  crearTarjetas():
+                crea un string con las tarjetas en html y luego las dibuja
+    Parametros   
                 arrayData:array con los todos los eventos
                 nodo: nodo donde insertar el contenido html             
 */
@@ -30,7 +27,7 @@ function crearTarjetas(arrayData, nodo) {
                 <p>Date: ${dato.date} </p>
                 <div class="card-bottom d-flex flex-row justify-content-between">
                     <div>Price $${dato.price}</div>
-                    <a href="#" class="btn btn-primary">See more...</a>
+                    <a href="details.html?id=${dato._id}" class="btn btn-primary">See more...</a>
                 </div>
             </div>
         </div>
@@ -39,7 +36,9 @@ function crearTarjetas(arrayData, nodo) {
     });
     nodo.innerHTML = stringTarjeta;
 }
-/*  Parametros: 
+/*  searchFilter(): 
+                Filtra los datos del array segun los datos en el input search
+    Parametros: 
                 arrayData:      array de eventos 
                 nodo:           nodo del input con el texto para filtrar
     Retorna 
@@ -52,18 +51,38 @@ function searchFilter(arrayData, nodo) {
     return arraySearch;
 }
 
-/*  Parametros: 
+/*  onSearch():
+                Funcion que se activa con un evento en el input search
+     Parametros:                           
                 evento:         evento el cual se activa y se llama a la funcion
                 arrayData:      array de eventos 
                 input:          nodo del input con el texto para filtrar
                 tarjeta:        nodo donde insertar las tarjetas
 
-                foodfair, museum, party, music, race, book, cinema:  nodos correspondientes a los checkbox                              
+                aChk:           array con los nodos correspondientes a los checkbox                              
 */
-function clickSearch(evento, arrayData, input, tarjeta, aDatos, foodfair, museum, party, music, race, book, cinema) {
+function onSearch(evento, arrayData, input, tarjeta, aDatos, aChk) {
+    if (input.value == "" || evento.key == "Backspace") { //si el buscador esta vacio o si borro vuelvo a llenar el array para luego filtrar
+        arrayData = aDatos.filter((aDato) => (aChk[0].checked && aDato.category == aChk[0].value) || (aChk[1].checked && aDato.category == aChk[1].value) || (aChk[2].checked && aDato.category == aChk[2].value) || (aChk[3].checked && aDato.category == aChk[3].value) || (aChk[4].checked && aDato.category == aChk[4].value) || (aChk[5].checked && aDato.category == aChk[5].value) || (aChk[6].checked && aDato.category == aChk[6].value));
+    }
+    crearTarjetas(arrayData = searchFilter(arrayData, input), tarjeta);
+
+    return arrayData;
+}
+/*  clickSearch():
+                Funcion que se activa al clickear el boton search o presionar enter en el input search
+    Parametros: 
+                evento:         evento el cual se activa y se llama a la funcion
+                arrayData:      array de eventos 
+                input:          nodo del input con el texto para filtrar
+                tarjeta:        nodo donde insertar las tarjetas
+
+                aChk:           array con los nodos correspondientes a los checkbox                           
+*/
+function clickSearch(evento, arrayData, input, tarjeta, aDatos, aChk) {
     evento.preventDefault();
-    if (input.value == "") {
-        arrayData = aDatos.filter((aDato) => (foodfair.checked && aDato.category == foodfair.value) || (museum.checked && aDato.category == museum.value) || (party.checked && aDato.category == party.value) || (music.checked && aDato.category == music.value) || (race.checked && aDato.category == race.value) || (book.checked && aDato.category == book.value) || (cinema.checked && aDato.category == cinema.value));
+    if (input.value == "" || evento.key == "Backspace") { //si el buscador esta vacio o si borro vuelvo a llenar el array para luego filtrar
+        arrayData = aDatos.filter((aDato) => (aChk[0].checked && aDato.category == aChk[0].value) || (aChk[1].checked && aDato.category == aChk[1].value) || (aChk[2].checked && aDato.category == aChk[2].value) || (aChk[3].checked && aDato.category == aChk[3].value) || (aChk[4].checked && aDato.category == aChk[4].value) || (aChk[5].checked && aDato.category == aChk[5].value) || (aChk[6].checked && aDato.category == aChk[6].value));
     }
     crearTarjetas(arrayData = searchFilter(arrayData, input), tarjeta);
 
@@ -71,14 +90,15 @@ function clickSearch(evento, arrayData, input, tarjeta, aDatos, foodfair, museum
 }
 
 
-/*  Parametros:
+/*  filtrarCheck()
+                Funcion que filtra el array usado para crear las tarjetas segun los checkbox activados y el contenido del input search
+    Parametros:
                 checkBox: nodo perteneciente al checkbox que cambio su estado
                 arrayAct: array que contiene los elementos filtrados por input search y checkbox
                 arrayData: array con todos los elementos que necesita la pagina
                 tarjeta: nodo donde insertar las tarjetas
                 input: nodo del input con el texto para filtrar
-                */
-                
+                */               
 function filtrarCheck(checkBox, arrayAct, arrayData, tarjeta, input) {
     if (checkBox.checked) {
         arrayData.forEach((data) => {
@@ -109,18 +129,13 @@ function filtrarCheck(checkBox, arrayAct, arrayData, tarjeta, input) {
 }
 
 /*inicializo*/
-
 function init() {
     crearTarjetas(datos, nodoTarjetas);
-    nodoSearch.addEventListener('click', (e) => arrayActual = clickSearch(e, arrayActual, nodoInputSearch, nodoTarjetas, datos, nodoFFChk, nodoMusChk, nodoCostPartyChk, nodoMusicChk, nodoRaceChk, nodoBookExChk, nodoCinemaChk));
-    nodoFFChk.addEventListener('click', () => arrayActual = filtrarCheck(nodoFFChk, arrayActual, datos, nodoTarjetas, nodoInputSearch));
-    nodoMusChk.addEventListener('click', () => arrayActual = filtrarCheck(nodoMusChk, arrayActual, datos, nodoTarjetas, nodoInputSearch));
-    nodoCostPartyChk.addEventListener('click', () => arrayActual = filtrarCheck(nodoCostPartyChk, arrayActual, datos, nodoTarjetas, nodoInputSearch));
-    nodoMusicChk.addEventListener('click', () => arrayActual = filtrarCheck(nodoMusicChk, arrayActual, datos, nodoTarjetas, nodoInputSearch));
-    nodoRaceChk.addEventListener('click', () => arrayActual = filtrarCheck(nodoRaceChk, arrayActual, datos, nodoTarjetas, nodoInputSearch));
-    nodoBookExChk.addEventListener('click', () => arrayActual = filtrarCheck(nodoBookExChk, arrayActual, datos, nodoTarjetas, nodoInputSearch));
-    nodoCinemaChk.addEventListener('click', () => arrayActual = filtrarCheck(nodoCinemaChk, arrayActual, datos, nodoTarjetas, nodoInputSearch));
-
+    nodoSearch.addEventListener('click', (e) => arrayActual = clickSearch(e, arrayActual, nodoInputSearch, nodoTarjetas, datos, arrayChk));
+    nodoInputSearch.addEventListener('click', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch, nodoTarjetas, datos, arrayChk));
+    nodoInputSearch.addEventListener('keyup', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch, nodoTarjetas, datos, arrayChk));
+    nodoInputSearch.addEventListener('search', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch, nodoTarjetas, datos, arrayChk));
+    arrayChk.forEach((nodo) => nodo.addEventListener('change', () => arrayActual = filtrarCheck(nodo, arrayActual, datos, nodoTarjetas, nodoInputSearch)));
 }
 
 init();

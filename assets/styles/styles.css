@@ -79,7 +79,7 @@ header {
 }
 
 footer {
-    height: 5rem;
+    height: 6rem!important;
     width: 100%;
 }
 
@@ -113,7 +113,10 @@ footer div {
         align-items: flex-end;
     }
 
-
+    .image-details{
+        object-fit:cover;
+        height: 30vh!important;
+    }
 
     footer {
         height: 10%;
@@ -217,4 +220,30 @@ th{
     background-color: #d40666!important;
     color: white!important;
     border-color: white!important;
+}
+
+
+.card-container{
+    min-height: 70vh;    
+}
+
+
+
+.card-body-container, .image-container{
+    border: 1px solid black!important;
+    padding: 10px;
+    box-shadow: 5px 5px 5px rgb(167, 161, 161);
+}
+
+
+.card{
+    box-shadow: 5px 5px 5px rgb(180, 177, 177);
+}
+
+.main-details{
+    min-height: 72vh; 
+}
+
+.image-details{
+    object-fit: cover;
 }
