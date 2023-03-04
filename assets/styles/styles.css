@@ -101,6 +101,16 @@ footer div {
 
 .nav-link {
     color: #d40666 !important;
+    transition: all .2s ease-in-out;
+}
+
+.nav-link:hover{
+    transform: scale(1.1);
+    color: white!important;
+}
+
+.active{
+    color: white!important;
 }
 
 .navbar-toggler {
@@ -246,4 +256,5 @@ th{
 
 .image-details{
     object-fit: cover;
+    height:100%!important;
 }

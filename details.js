@@ -15,11 +15,8 @@ const currentDate = data.currentDate;
 */
 function crearTarjeta(arrayData, nodo, id, date) {
     let stringTarjeta = "";
-    let assistEst = "";
-    console.log(arrayData);
+    let assistEst = "";   
     let dato = arrayData.find((evento) => evento._id == id);
-    console.log(dato.date);
-    console.log(date);
     if (dato.date < date) {
         assistEst = "Assitance: " + dato.assistance
     } else {
@@ -32,7 +29,7 @@ function crearTarjeta(arrayData, nodo, id, date) {
                             </div>
                             <div class="col-md-7 d-flex flex-column justify-content-center card-body-container">
                                 <div class="card-body d-flex flex-column">
-                                    <h5 class="card-title">${dato.name}</h5>
+                                    <h3 class="card-title">${dato.name}</h3>
                                     <p class="card-text">${dato.description}</p>
                                     <p>Date: ${dato.date}</p>
                                     <p>Category: ${dato.category}</p>
