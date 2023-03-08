@@ -32,6 +32,7 @@ main{
     padding-bottom: 20px;
     color: #d40666;
     font-weight: 700;
+    font-size: 2rem;
 }
 
 .next {
@@ -42,6 +43,7 @@ main{
     color: #d40666;
     font-weight: 700;
     width: 2rem;
+    font-size: 2rem;
 
 }
 
@@ -69,7 +71,7 @@ header {
 .secondary-active {
     padding-top: 20px;
     padding-bottom: 20px;
-    font-size: larger;
+    font-size: 2em;
     font-weight: 500;
 }
 

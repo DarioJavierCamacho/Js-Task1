@@ -1,4 +1,5 @@
 const nodoTarjeta = document.getElementById('card-container');
+
 const queryString = location.search;
 const params = new URLSearchParams(queryString);
 const id = params.get("id");
