@@ -1,11 +1,32 @@
+const ApiUrl = "./amazing1.json"
 const nodoTarjeta = document.getElementById('card-container');
 
 const queryString = location.search;
 const params = new URLSearchParams(queryString);
 const id = params.get("id");
 
-const arrayDatos = data.events;
-const currentDate = data.currentDate;
+let arrayDatos = [];
+let arrayActual = [];
+let fechaActual = "";
+/* getEvents()
+    obtiene el array de elementos de la api
+
+*/
+async function getEvents(){
+    let arrayJson
+    await fetch(ApiUrl)
+    .then(response => response.json() )
+    .then(dataJson => {
+        arrayJson = dataJson;
+        crearTarjeta(arrayJson.events, nodoTarjeta, id, arrayJson.currentDate); 
+        arrayDatos= dataJson.events;   
+        arrayActual= dataJson.events; 
+        fechaActual = dataJson.currentDate;  
+    })
+    .catch(()=>console.log(error.message))
+}
+
+
 /*  crearTarjeta():
                 crea un string con la tarjeta en html y luego la dibuja
     Parametros   
@@ -14,7 +35,7 @@ const currentDate = data.currentDate;
                 id:     id de el evento
                 date:   fecha actual           
 */
-function crearTarjeta(arrayData, nodo, id, date) {
+function crearTarjeta(arrayData, nodo, id,date) {
     let stringTarjeta = "";
     let assistEst = "";   
     let dato = arrayData.find((evento) => evento._id == id);
@@ -23,16 +44,17 @@ function crearTarjeta(arrayData, nodo, id, date) {
     } else {
         assistEst = "Estimate: " + dato.estimate
     }
-    stringTarjeta = `<div class="col-12  mb-5">
-                        <div class="row gap-3" id="card-container">
-                            <div class="col-sm-10 col-md-4 image-container">
+    stringTarjeta = `<div class="col-12  mb-5 mt-5">
+                        <div class="row gap-3" id="card-container" >
+                            <div class="col-sm-10 col-md-4 image-container" style="background-color:#dadcdd">
                                 <img src="${dato.image}" class="img-fluid rounded-start image-details" alt="...">
                             </div>
-                            <div class="col-md-7 d-flex flex-column justify-content-center card-body-container">
+                            <div class="col-md-7 d-flex flex-column justify-content-center card-body-container" style="background-color:#dadcdd">
                                 <div class="card-body d-flex flex-column">
                                     <h3 class="card-title">${dato.name}</h3>
                                     <p class="card-text">${dato.description}</p>
                                     <p>Date: ${dato.date}</p>
+                                    <p>Place: ${dato.place}</p>
                                     <p>Category: ${dato.category}</p>
                                     <p>Capacity: ${dato.capacity}</p>
                                     <p class="flex-grow-1">${assistEst}</p>
@@ -53,7 +75,7 @@ function onClick(){
 
 
 function init(){
-    crearTarjeta(arrayDatos, nodoTarjeta, id, currentDate);
+    getEvents();
 }
 
 

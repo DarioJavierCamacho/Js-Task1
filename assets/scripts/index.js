@@ -1,6 +1,4 @@
-const datos = data.events;
-const fechaActual = data.currentDate;
-let arrayActual = data.events;
+const ApiUrl = "./amazing1.json"
 
 const nodoTarjetas = document.getElementById('card-container');
 const nodoSearch = document.getElementById('search');
@@ -8,7 +6,39 @@ const nodoInputSearch = document.getElementById('input-search');
 
 const arrayChk = document.querySelectorAll('.chk-box');
 
+let datos = [];
+let arrayActual = [];
+/* getEvents()
+    obtiene el array de elementos de la api
 
+*/
+async function getEvents(){
+    let arrayJson
+    await fetch(ApiUrl)
+    .then(response => response.json() )
+    .then(dataJson => {
+        arrayJson = dataJson;
+        datos = arrayJson.events;
+        arrayActual = arrayJson.events;
+       crearTarjetas(arrayActual,nodoTarjetas);
+    })
+    .catch(()=>console.log(error.message))
+}
+
+/* getCurrentDAte()
+    obtiene la fecha actual de la api
+
+*/
+async function getCurrentDate(){
+    let arrayJson
+    await fetch(ApiUrl)
+    .then(response => response.json() )
+    .then(dataJson => {
+        arrayJson = dataJson.currentDate;
+        return arrayJson;
+    })
+    .catch(()=>console.log(error.message))
+}
 /*  crearTarjetas():
                 crea un string con las tarjetas en html y luego las dibuja
     Parametros   
@@ -21,7 +51,7 @@ function crearTarjetas(arrayData, nodo) {
         stringTarjeta += `<div class="col-sm-11 col-md-5 col-lg-4 col-xxl-3 mt-4 mb-4 d-flex justify-content-center">
         <div class="card" style="width: 18rem;">
             <img src="${dato.image}" class="card-img-top" alt="...">
-            <div class="card-body d-flex flex-column">
+            <div class="card-body d-flex flex-column" style="background-color:#dadcdd">
                 <h5 class="card-title">${dato.name}</h5>
                 <p class="card-text flex-grow-1">${dato.description}</p>
                 <p>Date: ${dato.date} </p>
@@ -130,7 +160,9 @@ function filtrarCheck(checkBox, arrayAct, arrayData, tarjeta, input) {
 
 /*inicializo*/
 function init() {
-    crearTarjetas(datos, nodoTarjetas);
+    getEvents();
+   /* let fechaActual = getCurrentDate();*/
+    
     nodoSearch.addEventListener('click', (e) => arrayActual = clickSearch(e, arrayActual, nodoInputSearch, nodoTarjetas, datos, arrayChk));
     nodoInputSearch.addEventListener('click', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch, nodoTarjetas, datos, arrayChk));
     nodoInputSearch.addEventListener('keyup', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch, nodoTarjetas, datos, arrayChk));

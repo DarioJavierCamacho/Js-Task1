@@ -1,6 +1,4 @@
-const datos = data.events;
-const fechaActual = data.currentDate;
-
+const ApiUrl = "./amazing1.json"
 
 const nodoTarjetas = document.getElementById('card-container');
 const nodoSearch = document.getElementById('search');
@@ -8,6 +6,30 @@ const nodoInputSearch = document.getElementById('input-search');
 
 const arrayChk = document.querySelectorAll('.chk-box');
 
+let arrayDatos = [];
+let arrayActual = [];
+let fechaActual = "";
+/* getEvents()
+    obtiene el array de elementos de la api
+
+*/
+async function getEvents(){
+    let arrayJson
+    await fetch(ApiUrl)
+    .then(response => response.json() )
+    .then(dataJson => {
+        arrayJson = dataJson;
+        datos = arrayJson.events;
+        console.log(arrayJson.currentDate);
+        fechaActual = arrayJson.currentDate;
+        arrayDatos = filtrarPasado(datos, fechaActual); // array filtrado con eventos pasados
+        arrayActual = arrayDatos;   //array actual para usar filtro de input search y checkbox
+        console.log(arrayJson);
+        console.log(datos);
+       crearTarjetas(arrayActual,nodoTarjetas);
+    })
+    .catch(()=>console.log(Error().message))
+}
 
 /*  filtrarPasado()
                 funcion que filtra el array de eventos que son anteriores a la fecha actual suministrada
@@ -35,9 +57,10 @@ function crearTarjetas(pasados, nodo) {
         stringTarjeta += `<div class="col-sm-11 col-md-5 col-lg-4 col-xxl-3 mt-4 mb-4 d-flex justify-content-center">
         <div class="card" style="width: 18rem;">
             <img src="${pasado.image}" class="card-img-top" alt="...">
-            <div class="card-body d-flex flex-column">
+            <div class="card-body d-flex flex-column" style="background-color:#dadcdd">
                 <h5 class="card-title">${pasado.name}</h5>
                 <p class="card-text flex-grow-1">${pasado.description}</p>
+                <p>Date: ${pasado.date} </p>
                 <div class="card-bottom d-flex flex-row justify-content-between">
                     <div>Price $${pasado.price}</div>
                     <a href="details.html?id=${pasado._id}" class="btn btn-primary">See More...</a>
@@ -158,9 +181,7 @@ function filtrarCheck(checkBox, arrayAct, arrayData, tarjeta, input) {
 /*inicializo*/
 
 function init() {
-    let arrayDatos = filtrarPasado(datos, fechaActual); // array filtrado con eventos pasados
-    let arrayActual = arrayDatos;   //array actual para usar filtro de input search y checkbox
-    crearTarjetas(arrayActual, nodoTarjetas);
+    getEvents();
     nodoSearch.addEventListener('click', (e) => arrayActual = clickSearch(e, arrayActual, nodoInputSearch, nodoTarjetas, arrayDatos, arrayChk));
     nodoInputSearch.addEventListener('click', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch, nodoTarjetas, arrayDatos, arrayChk));
     nodoInputSearch.addEventListener('keyup', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch, nodoTarjetas, arrayDatos, arrayChk));
