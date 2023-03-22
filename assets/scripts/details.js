@@ -1,4 +1,4 @@
-const ApiUrl = "./amazing1.json"
+const ApiUrl = "https://mindhub-xj03.onrender.com/api/amazing"
 const nodoTarjeta = document.getElementById('card-container');
 
 const queryString = location.search;

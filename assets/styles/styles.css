@@ -11,12 +11,12 @@ body{
 }
 
 main{
-    min-height: 70vh;
+    min-height: 85vh;
+    min-width: 320px!important;
 }
 
 .logo {
-    width: 60px;
-    height: 60px;
+    height: 30px;
     
 }
 
@@ -135,7 +135,7 @@ footer div {
     }
 
     header {
-        height: 170px;
+        height: 140px;
     }
 
 
@@ -174,7 +174,6 @@ i {
     }
 
     .logo {
-        width: 200px;
         height: 200px;
     }
     .blank-td {
@@ -253,7 +252,7 @@ th{
 }
 
 .main-details,.contact-details{
-    min-height: 72vh; 
+    min-height: 85vh; 
 }
 
 .image-details{
@@ -261,3 +260,16 @@ th{
     height:100%!important;
 }
 
+.td-sub{
+    background-color:rgb(207,210,213)!important;
+    color:black;
+}
+
+td{
+    padding: 5px;
+    padding-left: 20px;
+}
+
+.table-container{
+    min-height: 85vh;
+}

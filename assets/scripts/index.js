@@ -1,44 +1,22 @@
-const ApiUrl = "./amazing1.json"
+const ApiUrl = "https://mindhub-xj03.onrender.com/api/amazing"
 
 const nodoTarjetas = document.getElementById('card-container');
 const nodoSearch = document.getElementById('search');
 const nodoInputSearch = document.getElementById('input-search');
 
-const arrayChk = document.querySelectorAll('.chk-box');
+let arrayChk = document.querySelectorAll('.chk-box');
+const nodoChk = document.getElementById('fieldset');
 
 let datos = [];
 let arrayActual = [];
-/* getEvents()
-    obtiene el array de elementos de la api
+let arrayCategory = [];
 
-*/
-async function getEvents(){
-    let arrayJson
-    await fetch(ApiUrl)
-    .then(response => response.json() )
-    .then(dataJson => {
-        arrayJson = dataJson;
-        datos = arrayJson.events;
-        arrayActual = arrayJson.events;
-       crearTarjetas(arrayActual,nodoTarjetas);
-    })
-    .catch(()=>console.log(error.message))
-}
+let arrayBoxes = []; 
+let arrayBoxesFiltrados = [];
 
-/* getCurrentDAte()
-    obtiene la fecha actual de la api
 
-*/
-async function getCurrentDate(){
-    let arrayJson
-    await fetch(ApiUrl)
-    .then(response => response.json() )
-    .then(dataJson => {
-        arrayJson = dataJson.currentDate;
-        return arrayJson;
-    })
-    .catch(()=>console.log(error.message))
-}
+
+
 /*  crearTarjetas():
                 crea un string con las tarjetas en html y luego las dibuja
     Parametros   
@@ -91,12 +69,11 @@ function searchFilter(arrayData, nodo) {
 
                 aChk:           array con los nodos correspondientes a los checkbox                              
 */
-function onSearch(evento, arrayData, input, tarjeta, aDatos, aChk) {
+function onSearch(evento, arrayData, input, aDatos, aChk) {
     if (input.value == "" || evento.key == "Backspace") { //si el buscador esta vacio o si borro vuelvo a llenar el array para luego filtrar
-        arrayData = aDatos.filter((aDato) => (aChk[0].checked && aDato.category == aChk[0].value) || (aChk[1].checked && aDato.category == aChk[1].value) || (aChk[2].checked && aDato.category == aChk[2].value) || (aChk[3].checked && aDato.category == aChk[3].value) || (aChk[4].checked && aDato.category == aChk[4].value) || (aChk[5].checked && aDato.category == aChk[5].value) || (aChk[6].checked && aDato.category == aChk[6].value));
+       arrayData = aDatos;
     }
-    crearTarjetas(arrayData = searchFilter(arrayData, input), tarjeta);
-
+    arrayData = filtroDoble(aDatos,input,nodoTarjetas)
     return arrayData;
 }
 /*  clickSearch():
@@ -109,65 +86,94 @@ function onSearch(evento, arrayData, input, tarjeta, aDatos, aChk) {
 
                 aChk:           array con los nodos correspondientes a los checkbox                           
 */
-function clickSearch(evento, arrayData, input, tarjeta, aDatos, aChk) {
+function clickSearch(evento, arrayData, input,  aDatos) {
     evento.preventDefault();
-    if (input.value == "" || evento.key == "Backspace") { //si el buscador esta vacio o si borro vuelvo a llenar el array para luego filtrar
-        arrayData = aDatos.filter((aDato) => (aChk[0].checked && aDato.category == aChk[0].value) || (aChk[1].checked && aDato.category == aChk[1].value) || (aChk[2].checked && aDato.category == aChk[2].value) || (aChk[3].checked && aDato.category == aChk[3].value) || (aChk[4].checked && aDato.category == aChk[4].value) || (aChk[5].checked && aDato.category == aChk[5].value) || (aChk[6].checked && aDato.category == aChk[6].value));
-    }
-    crearTarjetas(arrayData = searchFilter(arrayData, input), tarjeta);
-
+    filtroDoble(aDatos,input,nodoTarjetas)
     return arrayData;
 }
 
 
-/*  filtrarCheck()
-                Funcion que filtra el array usado para crear las tarjetas segun los checkbox activados y el contenido del input search
-    Parametros:
-                checkBox: nodo perteneciente al checkbox que cambio su estado
-                arrayAct: array que contiene los elementos filtrados por input search y checkbox
-                arrayData: array con todos los elementos que necesita la pagina
-                tarjeta: nodo donde insertar las tarjetas
-                input: nodo del input con el texto para filtrar
-                */               
-function filtrarCheck(checkBox, arrayAct, arrayData, tarjeta, input) {
-    if (checkBox.checked) {
-        arrayData.forEach((data) => {
-            if (data.category == checkBox.value) {
-                if (data.category.toLowerCase().includes(input.value.toLowerCase()) || data.name.toLowerCase().includes(input.value.toLowerCase()) || data.description.toLowerCase().includes(input.value.toLowerCase()) || data.place.toLowerCase().includes(input.value.toLowerCase())) {
-                    arrayAct.push(data);
-                }
-            }
-        });
-    } else {
-        arrayAct = arrayAct.filter((actual) => actual.category != checkBox.value);
-    }
-    arrayAct.sort((a, b) => {
-        const _idA = a._id;
-        const _idB = b._id;
-        if (_idA < _idB) {
-            return -1;
-        }
-        if (_idA > _idB) {
-            return 1;
-        }
 
-        // names must be equal
-        return 0;
+function filtrarCheck( arrayData) {
+    let dataBoxes = [];
+    arrayBoxes = getChecked();
+    if(arrayBoxes.length>0){
+         dataBoxes = arrayData.filter(dato => arrayBoxes.includes(dato.category))
+    }
+        else 
+            dataBoxes=arrayData;
+    return dataBoxes;
+}
+
+function getChecked() {
+    let boxes = [];
+    arrayChk.forEach(dato => {
+        if (dato.checked) {
+            if (!boxes.includes(dato.value)) {
+                boxes.push(dato.value);
+            }
+        }          
+    })
+    return boxes;   
+}
+
+function getCategory(arrayData) {
+    arrayData.forEach(element => {
+        if (!arrayCategory.includes(element.category)) {
+            arrayCategory.push(element.category)
+        }
     });
-    crearTarjetas(arrayAct, tarjeta)
-    return arrayAct;
+}
+
+
+
+/* getEvents()
+    obtiene el array de elementos de la api
+
+*/
+async function getEvents() {
+    let arrayJson
+    await fetch(ApiUrl)
+        .then(response => response.json())
+        .then(dataJson => {
+            arrayJson = dataJson;
+            datos = arrayJson.events;
+            arrayActual = arrayJson.events;
+            getCategory(datos);
+            crearTarjetas(arrayActual, nodoTarjetas);
+            crearCheckBoxes(arrayCategory, nodoChk)
+        })
+        .catch(() => console.log(error.message))
+}
+
+function crearCheckBoxes(categorias, nodo) {
+    let stringCheckBoxes = "";
+    categorias.forEach(dato => {
+        stringCheckBoxes += `<div class="chk-container"><input type="checkbox" class="chk-box" name="${dato}" id="${dato}" value="${dato}"
+        ><label for="${dato}">${dato}</label>
+        </div>`
+    });
+    nodo.innerHTML = stringCheckBoxes;
+    arrayChk = document.querySelectorAll('.chk-box');// despues de crearlos les agrego el escuchador
+    arrayChk.forEach((nodo) => nodo.addEventListener('change', () => filtroDoble(datos,nodoInputSearch,nodoTarjetas)))
+}
+
+
+function filtroDoble(arrayData,nodo,tarjeta) {
+    let arrayDobleFiltrado = filtrarCheck(arrayData);
+    arrayDobleFiltrado = searchFilter(arrayDobleFiltrado, nodo);
+    crearTarjetas(arrayDobleFiltrado, tarjeta)
 }
 
 /*inicializo*/
 function init() {
     getEvents();
-   /* let fechaActual = getCurrentDate();*/
-    
-    nodoSearch.addEventListener('click', (e) => arrayActual = clickSearch(e, arrayActual, nodoInputSearch, nodoTarjetas, datos, arrayChk));
-    nodoInputSearch.addEventListener('click', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch, nodoTarjetas, datos, arrayChk));
-    nodoInputSearch.addEventListener('keyup', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch, nodoTarjetas, datos, arrayChk));
-    nodoInputSearch.addEventListener('search', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch, nodoTarjetas, datos, arrayChk));
-    arrayChk.forEach((nodo) => nodo.addEventListener('change', () => arrayActual = filtrarCheck(nodo, arrayActual, datos, nodoTarjetas, nodoInputSearch)));
+
+    nodoSearch.addEventListener('click', (e) => arrayActual = clickSearch(e, arrayData, nodoInputSearch,  datos));
+    nodoInputSearch.addEventListener('click', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch,  datos));
+    nodoInputSearch.addEventListener('keyup', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch,  datos));
+    nodoInputSearch.addEventListener('search', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch,  datos));
+    //arrayChk.forEach((nodo) => nodo.addEventListener('change', () => arrayActual = filtrarCheck(nodo, arrayActual, datos, nodoTarjetas, nodoInputSearch)));
 }
 
 init();
