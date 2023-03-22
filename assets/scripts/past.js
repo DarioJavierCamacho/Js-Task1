@@ -27,10 +27,7 @@ async function getEvents(){
         arrayJson = dataJson;
         arrayDatos = arrayJson.events;
         fechaActual = arrayJson.currentDate;
-        console.log(arrayDatos);
-        console.log(fechaActual);
         pasado = filtrarPasado(arrayDatos,fechaActual);
-        console.log(pasado);
         getCategory(pasado);
         crearTarjetas(pasado, nodoTarjetas);
         crearCheckBoxes(arrayCategory, nodoChk)
