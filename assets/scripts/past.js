@@ -13,26 +13,26 @@ let fechaActual = "";
 let pasado = [];
 let arrayCategory = [];
 
-let arrayBoxes = []; 
+let arrayBoxes = [];
 
 /* getEvents()
     obtiene el array de elementos de la api
 
 */
-async function getEvents(){
+async function getEvents() {
     let arrayJson
     await fetch(ApiUrl)
-    .then(response => response.json() )
-    .then(dataJson => {
-        arrayJson = dataJson;
-        arrayDatos = arrayJson.events;
-        fechaActual = arrayJson.currentDate;
-        pasado = filtrarPasado(arrayDatos,fechaActual);
-        getCategory(pasado);
-        crearTarjetas(pasado, nodoTarjetas);
-        crearCheckBoxes(arrayCategory, nodoChk)
-    })
-    .catch(()=>console.log(Error().message))
+        .then(response => response.json())
+        .then(dataJson => {
+            arrayJson = dataJson;
+            arrayDatos = arrayJson.events;
+            fechaActual = arrayJson.currentDate;
+            pasado = filtrarPasado(arrayDatos, fechaActual);
+            getCategory(pasado);
+            crearTarjetas(pasado, nodoTarjetas);
+            crearCheckBoxes(arrayCategory, nodoChk)
+        })
+        .catch(() => console.log(Error().message))
 }
 
 /*  filtrarPasado()
@@ -57,6 +57,7 @@ function filtrarPasado(arrayData, fecActual) {
 
 function crearTarjetas(pasados, nodo) {
     let stringTarjeta = "";
+    if (pasados.length > 0) {
     pasados.forEach(pasado => {
         stringTarjeta += `<div class="col-sm-11 col-md-5 col-lg-4 col-xxl-3 mt-4 mb-4 d-flex justify-content-center">
         <div class="card" style="width: 18rem;">
@@ -72,8 +73,10 @@ function crearTarjetas(pasados, nodo) {
             </div>
         </div>
     </div>`
-        return;
     });
+    }else{
+        stringTarjeta="<h2>No hay elementos que coincidan con la busqueda</h2>"
+    }
     nodo.innerHTML = stringTarjeta;
 }
 
@@ -87,9 +90,9 @@ Retorna
                             
 */
 function searchFilter(arrayData, nodo) {
-let searchValue = nodo.value.toLowerCase();
-let arraySearch = arrayData.filter((data) => data.category.toLowerCase().includes(searchValue) || data.name.toLowerCase().includes(searchValue) || data.description.toLowerCase().includes(searchValue) || data.place.toLowerCase().includes(searchValue))
-return arraySearch;
+    let searchValue = nodo.value.toLowerCase();
+    let arraySearch = arrayData.filter((data) => data.category.toLowerCase().includes(searchValue) || data.name.toLowerCase().includes(searchValue) || data.description.toLowerCase().includes(searchValue) || data.place.toLowerCase().includes(searchValue))
+    return arraySearch;
 }
 
 /*  onSearch():
@@ -103,90 +106,79 @@ return arraySearch;
             aChk:           array con los nodos correspondientes a los checkbox                              
 */
 function onSearch(evento, arrayData, input, aDatos) {
-if (input.value == "" || evento.key == "Backspace") { //si el buscador esta vacio o si borro vuelvo a llenar el array para luego filtrar
-   arrayData = pasado;
-}
-arrayData = filtroDoble(pasado,input,nodoTarjetas)
-return arrayData;
-}
 
-
-
-          
-/*  clickSearch():
-            Funcion que se activa al clickear el boton search o presionar enter en el input search
-Parametros: 
-            evento:         evento el cual se activa y se llama a la funcion
-            arrayData:      array de eventos 
-            input:          nodo del input con el texto para filtrar
-            tarjeta:        nodo donde insertar las tarjetas
-
-            aChk:           array con los nodos correspondientes a los checkbox                           
-*/
-function clickSearch(evento, arrayData, input,  aDatos) {
-evento.preventDefault();
-filtroDoble(pasado,input,nodoTarjetas)
-return arrayData;
+    if (evento.keyCode == 13) {
+        evento.preventDefault();
+    }
+    if (input.value == "" || evento.key == "Backspace") { //si el buscador esta vacio o si borro vuelvo a llenar el array para luego filtrar
+        arrayData = pasado;
+    }
+    arrayData = filtroDoble(pasado, input, nodoTarjetas)
+    return arrayData;
 }
 
 
 
-function filtrarCheck( arrayData) {
-let dataBoxes = [];
-arrayBoxes = getChecked();
-if(arrayBoxes.length>0){
-     dataBoxes = arrayData.filter(dato => arrayBoxes.includes(dato.category))
-}
-    else 
-        dataBoxes=arrayData;
-return dataBoxes;
+
+
+
+
+
+function filtrarCheck(arrayData) {
+    let dataBoxes = [];
+    arrayBoxes = getChecked();
+    if (arrayBoxes.length > 0) {
+        dataBoxes = arrayData.filter(dato => arrayBoxes.includes(dato.category))
+    }
+    else
+        dataBoxes = arrayData;
+    return dataBoxes;
 }
 
 function getChecked() {
-let boxes = [];
-arrayChk.forEach(dato => {
-    if (dato.checked) {
-        if (!boxes.includes(dato.value)) {
-            boxes.push(dato.value);
+    let boxes = [];
+    arrayChk.forEach(dato => {
+        if (dato.checked) {
+            if (!boxes.includes(dato.value)) {
+                boxes.push(dato.value);
+            }
         }
-    }          
-})
-return boxes;   
+    })
+    return boxes;
 }
 
 function getCategory(arrayData) {
-arrayData.forEach(element => {
-    if (!arrayCategory.includes(element.category)) {
-        arrayCategory.push(element.category)
-    }
-});
+    arrayData.forEach(element => {
+        if (!arrayCategory.includes(element.category)) {
+            arrayCategory.push(element.category)
+        }
+    });
 }
 
 function crearCheckBoxes(categorias, nodo) {
-let stringCheckBoxes = "";
-categorias.forEach(dato => {
-    stringCheckBoxes += `<div class="chk-container"><input type="checkbox" class="chk-box" name="${dato}" id="${dato}" value="${dato}"
+    let stringCheckBoxes = "";
+    categorias.forEach(dato => {
+        stringCheckBoxes += `<div class="chk-container"><input type="checkbox" class="chk-box" name="${dato}" id="${dato}" value="${dato}"
     ><label for="${dato}">${dato}</label>
     </div>`
-});
-nodo.innerHTML = stringCheckBoxes;
-arrayChk = document.querySelectorAll('.chk-box');// despues de crearlos les agrego el escuchador
-arrayChk.forEach((nodo) => nodo.addEventListener('change', () => filtroDoble(pasado,nodoInputSearch,nodoTarjetas)))
+    });
+    nodo.innerHTML = stringCheckBoxes;
+    arrayChk = document.querySelectorAll('.chk-box');// despues de crearlos les agrego el escuchador
+    arrayChk.forEach((nodo) => nodo.addEventListener('change', () => filtroDoble(pasado, nodoInputSearch, nodoTarjetas)))
 }
 
-function filtroDoble(arrayData,nodo,tarjeta) {
-let arrayDobleFiltrado = filtrarCheck(arrayData);
-arrayDobleFiltrado = searchFilter(arrayDobleFiltrado, nodo);
-crearTarjetas(arrayDobleFiltrado, tarjeta)
+function filtroDoble(arrayData, nodo, tarjeta) {
+    let arrayDobleFiltrado = filtrarCheck(arrayData);
+    arrayDobleFiltrado = searchFilter(arrayDobleFiltrado, nodo);
+    crearTarjetas(arrayDobleFiltrado, tarjeta)
 }
 /*inicializo*/
 
 function init() {
     getEvents();
-    nodoSearch.addEventListener('click', (e) => arrayActual = clickSearch(e, arrayActual, nodoInputSearch,  datos));
-    nodoInputSearch.addEventListener('click', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch,  arrayDatos));
-    nodoInputSearch.addEventListener('keyup', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch,  arrayDatos));
-    nodoInputSearch.addEventListener('search', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch,  arrayDatos));
+    nodoInputSearch.addEventListener('click', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch, arrayDatos));
+    nodoInputSearch.addEventListener('keydown', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch, arrayDatos));
+    nodoInputSearch.addEventListener('search', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch, arrayDatos));
 }
 
 init();

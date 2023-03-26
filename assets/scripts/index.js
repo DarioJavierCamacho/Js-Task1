@@ -1,7 +1,7 @@
 const ApiUrl = "https://mindhub-xj03.onrender.com/api/amazing"
 
 const nodoTarjetas = document.getElementById('card-container');
-const nodoSearch = document.getElementById('search');
+const nodoFormSubmit = document.getElementById('form-submit');
 const nodoInputSearch = document.getElementById('input-search');
 
 let arrayChk = document.querySelectorAll('.chk-box');
@@ -25,6 +25,7 @@ let arrayBoxesFiltrados = [];
 */
 function crearTarjetas(arrayData, nodo) {
     let stringTarjeta = "";
+    if(arrayData.length>0){
     arrayData.forEach(dato => {
         stringTarjeta += `<div class="col-sm-11 col-md-5 col-lg-4 col-xxl-3 mt-4 mb-4 d-flex justify-content-center">
         <div class="card" style="width: 18rem;">
@@ -40,8 +41,10 @@ function crearTarjetas(arrayData, nodo) {
             </div>
         </div>
     </div>`
-        return;
     });
+    }else{
+        stringTarjeta="<h2>No hay elementos que coincidan con la busqueda</h2>"
+    }
     nodo.innerHTML = stringTarjeta;
 }
 /*  searchFilter(): 
@@ -70,27 +73,16 @@ function searchFilter(arrayData, nodo) {
                 aChk:           array con los nodos correspondientes a los checkbox                              
 */
 function onSearch(evento, arrayData, input, aDatos, aChk) {
+    if(evento.keyCode == 13){
+        evento.preventDefault();
+    }
     if (input.value == "" || evento.key == "Backspace") { //si el buscador esta vacio o si borro vuelvo a llenar el array para luego filtrar
        arrayData = aDatos;
     }
     arrayData = filtroDoble(aDatos,input,nodoTarjetas)
     return arrayData;
 }
-/*  clickSearch():
-                Funcion que se activa al clickear el boton search o presionar enter en el input search
-    Parametros: 
-                evento:         evento el cual se activa y se llama a la funcion
-                arrayData:      array de eventos 
-                input:          nodo del input con el texto para filtrar
-                tarjeta:        nodo donde insertar las tarjetas
 
-                aChk:           array con los nodos correspondientes a los checkbox                           
-*/
-function clickSearch(evento, arrayData, input,  aDatos) {
-    evento.preventDefault();
-    filtroDoble(aDatos,input,nodoTarjetas)
-    return arrayData;
-}
 
 
 
@@ -168,10 +160,8 @@ function filtroDoble(arrayData,nodo,tarjeta) {
 /*inicializo*/
 function init() {
     getEvents();
-
-    nodoSearch.addEventListener('click', (e) => arrayActual = clickSearch(e, arrayData, nodoInputSearch,  datos));
     nodoInputSearch.addEventListener('click', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch,  datos));
-    nodoInputSearch.addEventListener('keyup', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch,  datos));
+    nodoInputSearch.addEventListener('keydown', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch,  datos));
     nodoInputSearch.addEventListener('search', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch,  datos));
     //arrayChk.forEach((nodo) => nodo.addEventListener('change', () => arrayActual = filtrarCheck(nodo, arrayActual, datos, nodoTarjetas, nodoInputSearch)));
 }

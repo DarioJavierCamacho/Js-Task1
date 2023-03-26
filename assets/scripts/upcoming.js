@@ -13,7 +13,7 @@ let fechaActual = "";
 let futuro = [];
 let arrayCategory = [];
 
-let arrayBoxes = []; 
+let arrayBoxes = [];
 
 
 /*  filtrarFuturo()
@@ -40,7 +40,7 @@ async function getEvents() {
             arrayJson = dataJson;
             arrayDatos = arrayJson.events;
             fechaActual = arrayJson.currentDate;
-            futuro = filtrarFuturo(arrayDatos,fechaActual);
+            futuro = filtrarFuturo(arrayDatos, fechaActual);
             getCategory(futuro);
             crearTarjetas(futuro, nodoTarjetas);
             crearCheckBoxes(arrayCategory, nodoChk)
@@ -58,8 +58,9 @@ async function getEvents() {
 
 function crearTarjetas(futuros, nodo) {
     let stringTarjeta = "";
+    if (futuros.length > 0) {
     futuros.forEach(futuro => {
-        stringTarjeta += `<div class="col-sm-11 col-md-5 col-lg-4 col-xxl-3 mt-4 mb-4 d-flex justify-content-center">
+            stringTarjeta += `<div class="col-sm-11 col-md-5 col-lg-4 col-xxl-3 mt-4 mb-4 d-flex justify-content-center">
         <div class="card" style="width: 18rem;">
             <img src="${futuro.image}" class="card-img-top" alt="...">
             <div class="card-body d-flex flex-column" style="background-color:#dadcdd">
@@ -72,11 +73,14 @@ function crearTarjetas(futuros, nodo) {
                 </div>
             </div>
         </div>
-    </div>`
-        return;
-    });
+    </div>`    
 
-    nodo.innerHTML = stringTarjeta;
+    });
+    }else{
+        stringTarjeta = "<h2>No hay elementos que coincidan con la busqueda</h2>"
+    }
+    nodo.innerHTML = stringTarjeta; 
+    return;
 }
 
 
@@ -107,42 +111,29 @@ function searchFilter(arrayData, nodo) {
                 aChk:           array con los nodos correspondientes a los checkbox                              
 */
 function onSearch(evento, arrayData, input, aDatos, aChk) {
-    if (input.value == "" || evento.key == "Backspace") { //si el buscador esta vacio o si borro vuelvo a llenar el array para luego filtrar
-       arrayData = futuro;
+    if(evento.keyCode == 13){
+        evento.preventDefault();
     }
-    arrayData = filtroDoble(futuro,input,nodoTarjetas)
+    if (input.value == "" || evento.key == "Backspace") { //si el buscador esta vacio o si borro vuelvo a llenar el array para luego filtrar
+        arrayData = futuro;
+    }
+    arrayData = filtroDoble(futuro, input, nodoTarjetas)
     return arrayData;
 }
 
 
 
-              
-/*  clickSearch():
-                Funcion que se activa al clickear el boton search o presionar enter en el input search
-    Parametros: 
-                evento:         evento el cual se activa y se llama a la funcion
-                arrayData:      array de eventos 
-                input:          nodo del input con el texto para filtrar
-                tarjeta:        nodo donde insertar las tarjetas
-
-                aChk:           array con los nodos correspondientes a los checkbox                           
-*/
-function clickSearch(evento, arrayData, input,  aDatos) {
-    evento.preventDefault();
-    filtroDoble(futuro,input,nodoTarjetas)
-    return arrayData;
-}
 
 
 
-function filtrarCheck( arrayData) {
+function filtrarCheck(arrayData) {
     let dataBoxes = [];
     arrayBoxes = getChecked();
-    if(arrayBoxes.length>0){
-         dataBoxes = arrayData.filter(dato => arrayBoxes.includes(dato.category))
+    if (arrayBoxes.length > 0) {
+        dataBoxes = arrayData.filter(dato => arrayBoxes.includes(dato.category))
     }
-        else 
-            dataBoxes=futuro;
+    else
+        dataBoxes = futuro;
     return dataBoxes;
 }
 
@@ -153,9 +144,9 @@ function getChecked() {
             if (!boxes.includes(dato.value)) {
                 boxes.push(dato.value);
             }
-        }          
+        }
     })
-    return boxes;   
+    return boxes;
 }
 
 function getCategory(arrayData) {
@@ -175,10 +166,10 @@ function crearCheckBoxes(categorias, nodo) {
     });
     nodo.innerHTML = stringCheckBoxes;
     arrayChk = document.querySelectorAll('.chk-box');// despues de crearlos les agrego el escuchador
-    arrayChk.forEach((nodo) => nodo.addEventListener('change', () => filtroDoble(futuro,nodoInputSearch,nodoTarjetas)))
+    arrayChk.forEach((nodo) => nodo.addEventListener('change', () => filtroDoble(futuro, nodoInputSearch, nodoTarjetas)))
 }
 
-function filtroDoble(arrayData,nodo,tarjeta) {
+function filtroDoble(arrayData, nodo, tarjeta) {
     let arrayDobleFiltrado = filtrarCheck(arrayData);
     arrayDobleFiltrado = searchFilter(arrayDobleFiltrado, nodo);
     crearTarjetas(arrayDobleFiltrado, tarjeta)
@@ -188,10 +179,9 @@ function filtroDoble(arrayData,nodo,tarjeta) {
 
 function init() {
     getEvents();
-    nodoSearch.addEventListener('click', (e) => arrayActual = clickSearch(e, arrayActual, nodoInputSearch,  datos));
-    nodoInputSearch.addEventListener('click', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch,  arrayDatos));
-    nodoInputSearch.addEventListener('keyup', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch,  arrayDatos));
-    nodoInputSearch.addEventListener('search', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch,  arrayDatos));
+    nodoInputSearch.addEventListener('click', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch, arrayDatos));
+    nodoInputSearch.addEventListener('keydown', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch, arrayDatos));
+    nodoInputSearch.addEventListener('search', (e) => arrayActual = onSearch(e, arrayActual, nodoInputSearch, arrayDatos));
 
 }
 
